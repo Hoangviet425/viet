@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu for Integrated Accounting System -->
+    <menuitem id="menu_accounting_root"
+              name="Integrated Accounting"
+              web_icon="accounting,static/description/icon.png"
+              sequence="10"/>
+
+    <!-- Main Submenus -->
+    <menuitem id="menu_accounting_main"
+              name="Accounting"
+              parent="menu_accounting_root"
+              sequence="10"/>
+
+    <template id="assets_backend" name="custom_cash_management assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/custom_cash_management/static/src/js/cash_dashboard.js"/>
+            <link rel="stylesheet" type="text/css" href="/custom_cash_management/static/src/css/cash_dashboard.css"/>
+        </xpath>
+    </template>
+
+    <menuitem id="menu_purchase_main"
+              name="Purchases"
+              parent="menu_accounting_root"
+              sequence="30"/>
+
+    <menuitem id="menu_sale_main"
+              name="Sales"
+              parent="menu_accounting_root"
+              sequence="40"/>
+
+    <menuitem id="menu_invoice_main"
+              name="Invoicing"
+              parent="menu_accounting_root"
+              sequence="50"/>
+
+    <menuitem id="menu_warehouse_main"
+              name="Warehouse"
+              parent="menu_accounting_root"
+              sequence="60"/>
+
+    <!-- Dashboard Menu -->
+    <menuitem id="menu_accounting_dashboard"
+              name="Dashboards"
+              parent="menu_accounting_root"
+              sequence="5"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_accounting_config"
+              name="Configuration"
+              parent="menu_accounting_root"
+              sequence="100"/>
+
+    <!-- Reporting Menu -->
+    <menuitem id="menu_accounting_reports"
+              name="Reporting"
+              parent="menu_accounting_root"
+              sequence="90"/>
+</odoo>

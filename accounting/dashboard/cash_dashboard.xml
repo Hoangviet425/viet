@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cash_dashboard_view" model="ir.ui.view">
+        <field name="name">cash.dashboard.view</field>
+        <field name="model">account.journal</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard o_account_kanban" create="false">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)}">
+                            <div class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary"><field name="name"/></div>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="mt-3 mb-3">
+                                            <h3 t-esc="'Tổng tiền: ' + format_monetary(record.balance.raw_value)"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a type="object" name="action_cash_receipt" class="btn btn-primary">
+                                            <span>Thu tiền</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a type="object" name="action_cash_payment" class="btn btn-secondary">
+                                            <span>Chi tiền</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <a type="object" name="action_cash_inventory" class="btn btn-info">
+                                            <span>Kiểm kê quỹ</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

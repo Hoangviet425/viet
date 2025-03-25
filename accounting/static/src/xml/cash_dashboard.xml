@@ -1,0 +1,72 @@
+<!-- static/src/xml/cash_dashboard.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="CashDashboardMain">
+        <div class="o_cash_dashboard_wrapper">
+            <div class="o_cash_dashboard_content"/>
+        </div>
+    </t>
+    
+    <t t-name="CashDashboardContent">
+        <div class="container-fluid o_cash_dashboard_content">
+            <div class="row mt-3">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4>Số dư tiền mặt</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <h2 t-esc="widget.dashboardData.cash_balance + ' ' + widget.dashboardData.currency_symbol"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h4>Tổng phiếu thu</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <h2 t-esc="widget.dashboardData.total_receipts"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header bg-danger text-white">
+                            <h4>Tổng phiếu chi</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <h2 t-esc="widget.dashboardData.total_payments"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Biểu đồ thu chi</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas class="cash_flow_chart"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-lg-6">
+                    <button class="btn btn-primary btn-block o_cash_receipt_button">
+                        <i class="fa fa-plus-circle"/> Phiếu thu tiền
+                    </button>
+                </div>
+                <div class="col-lg-6">
+                    <button class="btn btn-danger btn-block o_cash_payment_button">
+                        <i class="fa fa-minus-circle"/> Phiếu chi tiền
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

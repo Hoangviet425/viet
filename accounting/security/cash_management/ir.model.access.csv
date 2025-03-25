@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cash_receipt_accountant,cash.receipt accountant,model_cash_receipt,account.group_account_user,1,1,1,1
+access_cash_receipt_manager,cash.receipt manager,model_cash_receipt,account.group_account_manager,1,1,1,1
+access_cash_payment_accountant,cash.payment accountant,model_cash_payment,account.group_account_user,1,1,1,1
+access_cash_payment_manager,cash.payment manager,model_cash_payment,account.group_account_manager,1,1,1,1
+access_cash_inventory_accountant,cash.inventory accountant,model_cash_inventory,account.group_account_user,1,1,1,1
+access_cash_inventory_manager,cash.inventory manager,model_cash_inventory,account.group_account_manager,1,1,1,1

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Phiếu thu tiền -->
+    <record id="view_cash_receipt_tree" model="ir.ui.view">
+        <field name="name">cash.receipt.tree</field>
+        <field name="model">cash.receipt</field>
+        <field name="arch" type="xml">
+            <tree string="Phiếu thu tiền" decoration-info="state == 'draft'" decoration-success="state == 'posted'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="reason"/>
+                <field name="amount" sum="Tổng"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_cash_receipt_form" model="ir.ui.view">
+        <field name="name">cash.receipt.form</field>
+        <field name="model">cash.receipt</field>
+        <field name="arch" type="xml">
+            <form string="Phiếu thu tiền">
+                <header>
+                    <button name="action_confirm" type="object" string="Xác nhận" class="oe_highlight" states="draft"/>
+                    <button name="action_post" type="object" string="Hạch toán" class="oe_highlight" states="confirmed"/>
+                    <button name="action_cancel" type="object" string="Hủy" states="draft,confirmed,posted"/>
+                    <button name="action_draft" type="object" string="Về nháp" states="cancelled"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,posted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="partner_id"/>
+                            <field name="reason"/>
+                        </group>
+                        <group>
+                            <field name="journal_id"/>
+                            <field name="account_id"/>
+                            <field name="amount"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="move_id" readonly="1" attrs="{'invisible': [('move_id', '=', False)]}"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cash_receipt" model="ir.actions.act_window">
+        <field name="name">Phiếu thu tiền</field>
+        <field name="res_model">cash.receipt</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_draft': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo phiếu thu tiền mặt mới
+            </p>
+        </field>
+    </record>
+
+    <!-- Phiếu chi tiền -->
+    <record id="view_cash_payment_tree" model="ir.ui.view">
+        <field name="name">cash.payment.tree</field>
+        <field name="model">cash.payment</field>
+        <field name="arch" type="xml">
+            <tree string="Phiếu chi tiền" decoration-info="state == 'draft'" decoration-success="state == 'posted'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="reason"/>
+                <field name="amount" sum="Tổng"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_cash_payment_form" model="ir.ui.view">
+        <field name="name">cash.payment.form</field>
+        <field name="model">cash.payment</field>
+        <field name="arch" type="xml">
+            <form string="Phiếu chi tiền">
+                <header>
+                    <button name="action_confirm" type="object" string="Xác nhận" class="oe_highlight" states="draft"/>
+                    <button name="action_post" type="object" string="Hạch toán" class="oe_highlight" states="confirmed"/>
+                    <button name="action_cancel" type="object" string="Hủy" states="draft,confirmed,posted"/>
+                    <button name="action_draft" type="object" string="Về nháp" states="cancelled"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,posted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="partner_id"/>
+                            <field name="reason"/>
+                        </group>
+                        <group>
+                            <field name="journal_id"/>
+                            <field name="account_id"/>
+                            <field name="amount"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="move_id" readonly="1" attrs="{'invisible': [('move_id', '=', False)]}"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cash_payment" model="ir.actions.act_window">
+        <field name="name">Phiếu chi tiền</field>
+        <field name="res_model">cash.payment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_draft': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo phiếu chi tiền mặt mới
+            </p>
+        </field>
+    </record>
+
+    <!-- Kiểm kê quỹ -->
+    <record id="view_cash_inventory_tree" model="ir.ui.view">
+        <field name="name">cash.inventory.tree</field>
+        <field name="model">cash.inventory</field>
+        <field name="arch" type="xml">
+            <tree string="Kiểm kê quỹ">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="journal_id"/>
+                <field name="theoretical_amount"/>
+                <field name="counted_amount"/>
+                <field name="difference"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_cash_inventory_form" model="ir.ui.view">
+        <field name="name">cash.inventory.form</field>
+        <field name="model">cash.inventory</field>
+        <field name="arch" type="xml">
+            <form string="Kiểm kê quỹ">
+                <header>
+                    <button name="action_confirm" type="object" string="Xác nhận" class="oe_highlight" states="draft"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="journal_id"/>
+                        </group>
+                        <group>
+                            <field name="theoretical_amount"/>
+                            <field name="counted_amount"/>
+                            <field name="difference"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="note" placeholder="Ghi chú..."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cash_inventory" model="ir.actions.act_window">
+        <field name="name">Kiểm kê quỹ</field>
+        <field name="res_model">cash.inventory</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo báo cáo kiểm kê quỹ mới
+            </p>
+        </field>
+    </record>
+
+    <!-- Dashboard Tiền mặt - Giống MISA -->
+    <record id="view_cash_dashboard_kanban" model="ir.ui.view">
+        <field name="name">cash.dashboard.kanban</field>
+        <field name="model">account.journal</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard o_account_kanban" create="false">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)}">
+                            <div class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary"><field name="name"/></div>
+                                </div>
+                                <div class="o_kanban_manage_button_section">
+                                    <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v"/></a>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-6 o_kanban_primary_left">
+                                        <button type="object" name="action_open_reconcile" class="btn btn-primary">
+                                            <span>Sổ quỹ</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-6 o_kanban_primary_right">
+                                        <div t-if="record.type.raw_value == 'cash'">
+                                            <button name="%(action_cash_receipt)d" type="action"
+                                                context="{'default_journal_id': id}" class="btn btn-secondary">
+                                                Thu tiền
+                                            </button>
+                                            <button name="%(action_cash_payment)d" type="action"
+                                                context="{'default_journal_id': id}" class="btn btn-secondary">
+                                                Chi tiền
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="o_kanban_manage_pane container">
+                                <div class="o_kanban_card_manage_section o_kanban_manage_reports">
+                                    <div class="o_kanban_card_manage_title">
+                                        <span>Báo cáo</span>
+                                    </div>
+                                    <div>
+                                        <a name="%(action_cash_inventory)d" type="action"
+                                            context="{'default_journal_id': id}">Kiểm kê quỹ</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem id="menu_cash_management" name="Quản lý tiền mặt" parent="account.menu_finance" sequence="3"/>
+    
+    <menuitem id="menu_cash_receipt" name="Phiếu thu tiền" parent="menu_cash_management" 
+              action="action_cash_receipt" sequence="1"/>
+              
+    <menuitem id="menu_cash_payment" name="Phiếu chi tiền" parent="menu_cash_management" 
+              action="action_cash_payment" sequence="2"/>
+              
+    <menuitem id="menu_cash_inventory" name="Kiểm kê quỹ" parent="menu_cash_management" 
+              action="action_cash_inventory" sequence="3"/>
+</odoo>
+<record id="seq_cash_receipt" model="ir.sequence">
+    <field name="name">Phiếu thu tiền</field>
+    <field name="code">cash.receipt</field>
+    <field name="prefix">PTT/%(year)s/</field>
+    <field name="padding">4</field>
+</record>
+
+<record id="seq_cash_payment" model="ir.sequence">
+    <field name="name">Phiếu chi tiền</field>
+    <field name="code">cash.payment</field>
+    <field name="prefix">PCT/%(year)s/</field>
+    <field name="padding">4</field>
+</record>
+
+<record id="seq_cash_inventory" model="ir.sequence">
+    <field name="name">Kiểm kê quỹ</field>
+    <field name="code">cash.inventory</field>
+    <field name="prefix">KKQ/%(year)s/</field>
+    <field name="padding">4</field>
+</record>

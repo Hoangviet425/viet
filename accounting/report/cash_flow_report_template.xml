@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_cash_flow">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 class="text-center">BÁO CÁO THU CHI TIỀN MẶT</h2>
+                    <p class="text-center">
+                        Từ ngày <span t-esc="data['date_from']" t-options='{"widget": "date"}'/>
+                        đến ngày <span t-esc="data['date_to']" t-options='{"widget": "date"}'/>
+                    </p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h4>Tổng hợp thu chi</h4>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td>Số dư đầu kỳ:</td>
+                                            <td class="text-right">
+                                                <span t-esc="data['opening_balance']" t-options='{"widget": "monetary", "display_currency": user.company_id.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tổng thu:</td>
+                                            <td class="text-right text-success">
+                                                <span t-esc="data['total_receipts']" t-options='{"widget": "monetary", "display_currency": user.company_id.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tổng chi:</td>
+                                            <td class="text-right text-danger">
+                                                <span t-esc="data['total_payments']" t-options='{"widget": "monetary", "display_currency": user.company_id.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Số dư cuối kỳ:</strong></td>
+                                            <td class="text-right">
+                                                <strong><span t-esc="data['closing_balance']" t-options='{"widget": "monetary", "display_currency": user.company_id.currency_id}'/></strong>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="mt-4">Chi tiết phiếu thu</h4>
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Ngày</th>
+                                <th>Số phiếu</th>
+                                <th>Đối tác</th>
+                                <th>Lý do</th>
+                                <th>Sổ quỹ</th>
+                                <th class="text-right">Số tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="data['receipt_details']" t-as="receipt">
+                                <td><span t-esc="receipt['date']" t-options='{"widget": "date"}'/></td>
+                                <td><span t-esc="receipt['name']"/></td>
+                                <td><span t-esc="receipt['partner']"/></td>
+                                <td><span t-esc="receipt['reason']"/></td>
+                                <td><span t-esc="receipt['journal']"/></td>
+                                <td class="text-right">
+                                    <span t-esc="receipt['amount']" t-options='{"widget": "monetary", "display_currency": user.company_id.currency_id}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-right"><strong>Tổng:</strong></td>
+                                <td class="text-right">
+                                    <strong><span t-esc="data['total_receipts']" t-options='{"widget": "monetary", "display_currency": user.company_id.currency_id}'/></strong>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                    <h4 class="mt-4">Chi tiết phiếu chi</h4>
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Ngày</th>
+                                <th>Số phiếu</th>
+                                <th>Đối tác</th>
+                                <th>Lý do</th>
+                                <th>Sổ quỹ</th>
+                                <th class="text-right">Số tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="data['payment_details']" t-as="payment">
+                                <td><span t-esc="payment['date']" t-options='{"widget": "date"}'/></td>
+                                <td><span t-esc="payment['name']"/></td>
+                                <td><span t-esc="payment['partner']"/></td>
+                                <td><span t-esc="payment['reason']"/></td>
+                                <td><span t-esc="payment['journal']"/></td>
+                                <td class="text-right">
+                                    <span t-esc="payment['amount']" t-options='{"widget": "monetary", "display_currency": user.company_id.currency_id}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-right"><strong>Tổng:</strong></td>
+                                <td class="text-right">
+                                    <strong><span t-esc="data['total_payments']" t-options='{"widget": "monetary", "display_currency": user.company_id.currency_id}'/></strong>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+    
+    <record id="action_report_cash_flow" model="ir.actions.report">
+        <field name="name">Báo cáo thu chi tiền mặt</field>
+        <field name="model">cash.flow.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_cash_management.report_cash_flow</field>
+        <field name="report_file">custom_cash_management.report_cash_flow</field>
+        <field name="binding_model_id" ref="model_cash_flow_report"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cash_flow_report_form" model="ir.ui.view">
+        <field name="name">cash.flow.report.form</field>
+        <field name="model">cash.flow.report</field>
+        <field name="arch" type="xml">
+            <form string="Báo cáo thu chi tiền mặt">
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="journal_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_print_report" string="In báo cáo" type="object" class="btn-primary"/>
+                    <button string="Hủy" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_cash_flow_report" model="ir.actions.act_window">
+        <field name="name">Báo cáo thu chi tiền mặt</field>
+        <field name="res_model">cash.flow.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    
+    <menuitem id="menu_cash_flow_report" 
+              name="Báo cáo thu chi" 
+              parent="menu_cash_management" 
+              action="action_cash_flow_report" 
+              sequence="20"/>
+</odoo>
